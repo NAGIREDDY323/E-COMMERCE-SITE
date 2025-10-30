@@ -33,7 +33,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.email
-            user.set_password(form.cleaned_data['password'])
+            user.set_password(form.cleaned_data['password1'])
             user.is_active = False  # Activate after OTP verification
             user.save()
             
@@ -46,7 +46,7 @@ def register_view(request):
             print(f"OTP for {user.email} is: {otp_code}")
             
             request.session['email'] = user.email
-            return redirect('verify_otp')
+            return redirect('users:verify_otp')
     else:
         form = RegistrationForm()
     return render(request, 'users/register.html', {'form': form})
@@ -55,7 +55,7 @@ def register_view(request):
 def verify_otp_view(request):
     email = request.session.get('email')
     if not email:
-        return redirect('register')
+        return redirect('users:register')
     
     user = CustomUser.objects.get(email=email)
     if request.method == 'POST':
@@ -69,7 +69,7 @@ def verify_otp_view(request):
                 user.save()
                 login(request, user)
                 message = "Email verified! Logged in."
-                return redirect('home')
+                return redirect('users:home')
         except OTP.DoesNotExist:
             message = "Invalid OTP"
         return render(request, 'users/verify_otp.html', {'message': message})
@@ -83,7 +83,7 @@ def login_view(request):
         user = authenticate(request, email=email, password=password)
         if user:
             login(request, user)
-            return redirect('home')
+            return redirect('users:home')
         else:
             message = "Invalid credentials"
             return render(request, 'users/login.html', {'message': message})

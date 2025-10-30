@@ -8,3 +8,9 @@ def product_list(request):
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     return render(request, 'products/product_detail.html', {'product': product})
+def product_search(request):
+    query = request.GET.get('q', '')
+    products = Product.objects.filter(name__icontains=query) if query else []
+    print(products)
+    # return render(request, 'products/product_search.html', {'query': query, 'results': results})
+    return render(request, 'products/product_search.html', {'query': query, 'products': products})

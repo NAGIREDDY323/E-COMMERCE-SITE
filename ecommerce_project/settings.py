@@ -28,9 +28,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3eq!rw%uxlw6^q_e0kf4$9v@0rp02xy5jj@)9&s3m11m^(@m0$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['your-domain.com', 'www.your-domain.com', 'your-app.onrender.com']  # Add your host here
+
 
 
 # Application definition
@@ -147,3 +148,16 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'your-email@gmail.com'          # your email here
 EMAIL_HOST_PASSWORD = 'your-app-password'         # app password or your email password
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = os.getenv('DEBUG') == 'True'
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
+DATABASE_URL = os.getenv('DATABASE_URL')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')

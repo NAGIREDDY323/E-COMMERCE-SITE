@@ -1,6 +1,4 @@
-
 {% extends 'base.html' %}
-{% load static %}
 {% block content %}
 <h1 class="mb-4">Our Products</h1>
 <div class="row">
@@ -8,7 +6,8 @@
     <div class="col-md-4 mb-4">
         <div class="card h-100">
             {% if product.image %}
-            <img src="{{ product.image }}" class="card-img-outline-primary shadow-sm" alt="{{ product.name }}" style="height: 200px;  object-fit: cover;">
+            <img src="{{ product.image }}" class="card-img-top hover-zoom shadow-sm" alt="{{ product.name }}"
+                style="height: 200px; object-fit: cover;">
             <!-- <img src="{{ product.image.url }}" class="img-fluid rounded shadow-sm hover-zoom"> -->
 
             {% endif %}
@@ -26,7 +25,9 @@
         </div>
     </div>
     {% empty %}
-    <div class="col-12"><p class="alert alert-info">No products available yet.</p></div>
+    <div class="col-12">
+        <p class="alert alert-info">No products available yet.</p>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}

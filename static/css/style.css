@@ -1,0 +1,13 @@
+/* .hover-zoom:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+} */
+ .product-image {
+     height: 200px;
+     object-fit: cover;
+     transition: transform 0.3s ease;
+ }
+
+ .product-image:hover {
+     transform: scale(1.05);
+ }

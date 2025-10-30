@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def view_cart(request):
     cart, _ = Cart.objects.get_or_create(user=request.user)
-    total = sum(item.subtotal for item in cart.items.all())
+    total = sum(item.product.price * item.quantity for item in cart.items.all())
     return render(request, 'cart/cart.html', {'cart': cart, 'total': total})
 
 @login_required
